@@ -3743,6 +3743,26 @@ void GlobalParams::addFontFile(GString *fontName, GString *path) {
   unlockGlobalParams;
 }
 
+// Braille Pat
+void GlobalParams::setBrlHost(char *host) {
+  lockGlobalParams;
+  if (brlHost) {
+    delete brlHost;
+  }
+  brlHost = new GString(host);
+  unlockGlobalParams;
+}
+
+// Braille Pat
+void GlobalParams::setBrlKey(char *host) {
+  lockGlobalParams;
+  if (brlKey) {
+    delete brlKey;
+  }
+  brlKey = new GString(host);
+  unlockGlobalParams;
+}
+
 GBool GlobalParams::setPSPaperSize(char *size) {
   lockGlobalParams;
   if (!strcmp(size, "match")) {
