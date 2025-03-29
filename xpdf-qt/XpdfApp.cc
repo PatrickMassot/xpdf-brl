@@ -46,6 +46,8 @@ static char cfgFileArg[256] = "";
 static GBool printCommandsArg = gFalse;
 static GBool printVersionArg = gFalse;
 static GBool printHelpArg = gFalse;
+static char brlHostArg[256];  // Braille Pat
+static char brlKeyArg[256];  // Braille Pat
 
 static ArgDesc argDesc[] = {
   {"-open",         argFlag,   &openArg,           0,                          "open file using a default remote server"},
@@ -64,6 +66,10 @@ static ArgDesc argDesc[] = {
   {"-cmd",          argFlag,   &printCommandsArg,  0,                          "print commands as they're executed"},
   {"-tabstate",     argString, tabStateFile,       sizeof(tabStateFile),       "file for saving/loading tab state"},
   {"-cfg",          argString, cfgFileArg,         sizeof(cfgFileArg),         "configuration file to use in place of .xpdfrc"},
+  {"-brlhost",         argString,      brlHostArg,      sizeof(brlHostArg), // Braille Pat
+   "brlapi host name"},
+  {"-brlkey",         argString,      brlKeyArg,      sizeof(brlKeyArg), // Braille Pat
+   "brlapi key file"},
   {"-v",            argFlag,   &printVersionArg,   0,                          "print copyright and version info"},
   {"-h",            argFlag,   &printHelpArg,      0,                          "print usage information"},
   {"-help",         argFlag,   &printHelpArg,      0,                          "print usage information"},
@@ -230,6 +236,14 @@ XpdfApp::XpdfApp(int &argc, char **argv):
       }
       return;
     }
+  }
+  
+  // Braille args
+  if (brlHostArg[0]) {  // Braille Pat
+    globalParams->setBrlHost(brlHostArg);
+  }
+  if (brlKeyArg[0]) {  // Braille Pat
+    globalParams->setBrlKey(brlKeyArg);
   }
 
   //--- default remote server

@@ -26,6 +26,7 @@
 #include "BuiltinFontTables.h"
 #include "FontEncodingTables.h"
 #include "Annot.h"
+#include "brlapi.h"
 
 // the MSVC math.h doesn't define this
 #ifndef M_PI
@@ -99,6 +100,19 @@ Annot::Annot(PDFDoc *docA, Dict *dict, Ref *refA) {
   if (dict->lookup("Subtype", &obj1)->isName()) {
     type = new GString(obj1.getName());
   }
+
+  if (type->cmp("/Braille")) {
+  //fprintf(stderr, "Brltty detected.\n");
+
+    if (dict->lookup("Contents", &obj1)->isString()) {
+      GString contents = new GString(obj1.getString());
+    //  fprintf(stderr,"Writing to braille display...\n");
+      if (brlapi_writeText(0,contents.getCString())>=0)
+      {
+    //   fprintf(stderr,"Ok\n");
+      }
+     }
+   }
   obj1.free();
 
   //----- parse the rectangle

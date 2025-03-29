@@ -259,6 +259,8 @@ public:
   GString *findSystemFontFile(GString *fontName, SysFontType *type,
 			      int *fontNum);
   GString *findCCFontFile(GString *collection);
+  GString *getBrlHost();
+  GString *getBrlKey();
   int getPSPaperWidth();
   int getPSPaperHeight();
   void getPSImageableArea(int *llx, int *lly, int *urx, int *ury);
@@ -367,6 +369,8 @@ public:
 
   void addUnicodeRemapping(Unicode in, Unicode *out, int len);
   void addFontFile(GString *fontName, GString *path);
+  void setBrlHost(char *host);
+  void setBrlKey(char *host);
   GBool setPSPaperSize(char *size);
   void setPSPaperWidth(int width);
   void setPSPaperHeight(int height);
@@ -425,6 +429,8 @@ private:
   void createDefaultKeyBindings();
   void initStateFilePaths();
   void parseFile(GString *fileName, FILE *f);
+  void parseBrlHost(GList *tokens, GString *fileName, int line);
+  void parseBrlKey(GList *tokens, GString *fileName, int line);
   GList *parseLineTokens(char *buf, GString *fileName, int line);
   void parseNameToUnicode(GList *tokens, GString *fileName, int line);
   void parseCIDToUnicode(GList *tokens, GString *fileName, int line);
@@ -504,6 +510,8 @@ private:
   GHash *base14SysFonts;	// Base-14 system font files: font name
 				//   mapped to path [Base14FontInfo]
   SysFontList *sysFonts;	// system fonts
+  GString *brlHost;		// Braille brlapi host Pat
+  GString *brlKey;		// Braille brlapi key Pat
   int psPaperWidth;		// paper size, in PostScript points, for
   int psPaperHeight;		//   PostScript output
   int psImageableLLX,		// imageable area, in PostScript points,

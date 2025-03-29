@@ -1105,6 +1105,10 @@ void GlobalParams::parseLine(char *buf, GString *fileName, int line) {
       parseFontDir(tokens, fileName, line);
     } else if (!cmd->cmp("fontFileCC")) {
       parseFontFileCC(tokens, fileName, line);
+    } else if (!cmd->cmp("brlHost")) {  // Braille Pat
+      parseBrlHost(tokens, fileName, line);
+    } else if (!cmd->cmp("brlKey")) {  // Braille Pat
+      parseBrlKey(tokens, fileName, line);
     } else if (!cmd->cmp("psPaperSize")) {
       parsePSPaperSize(tokens, fileName, line);
     } else if (!cmd->cmp("psImageableArea")) {
@@ -1645,6 +1649,31 @@ void GlobalParams::parsePSLevel(GList *tokens, GString *fileName, int line) {
     error(errConfig, -1, "Bad 'psLevel' config file command ({0:t}:{1:d})",
 	  fileName, line);
   }
+}
+
+// Braille Pat
+void GlobalParams::parseBrlHost(GList *tokens, GString *fileName, int line) {
+  if (tokens->getLength() != 2) {
+    error(errConfig, -1, "Bad 'brlHost' command (%s:%d)",
+	  fileName->getCString(), line);
+    return;
+  }
+  if (brlHost) {
+    delete brlHost;
+  }
+  brlHost = ((GString *)tokens->get(1))->copy();
+}
+
+void GlobalParams::parseBrlKey(GList *tokens, GString *fileName, int line) {
+  if (tokens->getLength() != 2) {
+    error(errConfig, -1, "Bad 'brlKey' command (%s:%d)",
+	  fileName->getCString(), line);
+    return;
+  }
+  if (brlKey) {
+    delete brlKey;
+  }
+  brlKey = ((GString *)tokens->get(1))->copy();
 }
 
 void GlobalParams::parsePSResidentFont(GList *tokens, GString *fileName,

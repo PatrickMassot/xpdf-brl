@@ -38,6 +38,7 @@
 #endif
 #include "OptionalContent.h"
 #include "PDFDoc.h"
+#include "brlapi.h"
 
 //------------------------------------------------------------------------
 
@@ -324,6 +325,76 @@ GBool PDFDoc::setup2(GString *ownerPassword, GString *userPassword,
     return gFalse;
   }
 
+// Initialisation BrlAPI Pat
+#if BRLAPI_MINOR>=5
+  unsigned int x;
+  unsigned int y;
+  brlapi_connectionSettings_t settings;
+  GString *brlHostName;
+  GString *brlKeyFile;
+
+  if ((brlHostName = globalParams->getBrlHost())) {
+    settings.host = brlHostName->getCString();
+  } else {
+ 	settings.host=NULL;
+  }
+
+
+  if ((brlKeyFile = globalParams->getBrlKey())) {
+    settings.auth = brlKeyFile->getCString();
+  } else {
+ 	settings.auth="/etc/brlapi.key";
+  }
+
+
+fprintf(stderr, "Initialisation BrlAPI\n");
+ if (brlapi_openConnection(&settings,&settings)<0)
+ {
+  brlapi_perror("brlapi_openConnection");
+ } else {
+ if (brlapi_getDisplaySize(&x, &y)<0)
+  brlapi_perror("brlapi_getDisplaySize");
+ else
+  printf("Braille display has %d line%s of %d column%s\n",y,y>1?"s":"",x,x>1?"s":"");
+
+ fprintf(stderr,"Taking control of the tty... ");
+ if (brlapi_enterTtyMode(-1,NULL)>=0)
+ {
+  printf("Ok\n");
+ }
+
+  delete brlHostName;
+  delete brlKeyFile;
+
+  }
+
+#else 
+
+  unsigned int x;
+  unsigned int y;
+  brlapi_settings_t settings;
+ 
+  settings.authKey="/etc/brlapi.key";
+  settings.hostName="127.0.0.1:1";
+
+fprintf(stderr, "Initialisation BrlAPI\n");
+if (brlapi_initializeConnection(&settings,&settings)<0) {
+   fprintf(stderr,"couldn't connect to BrlAPI.\n");
+//   exit(1);
+  } else {
+ if (brlapi_getDisplaySize(&x, &y)<0)
+  brlapi_perror("brlapi_getDisplaySize");
+ else
+  printf("Braille display has %d line%s of %d column%s\n",y,y>1?"s":"",x,x>1?"s":"");
+
+ fprintf(stderr,"Taking control of the tty...\n");
+ if (brlapi_getTty(-1,NULL)>=0)
+ {
+//  printf("Ok\n");
+ }
+  }
+#endif
+
   // initialize the Annots object
   annots = new Annots(this);
 
@@ -357,6 +428,11 @@ PDFDoc::~PDFDoc() {
   if (fileName) {
     delete fileName;
   }
+  
+  // Disconnect from BrlAPI Pat
+  brlapi_leaveTty();
+  brlapi_closeConnection();
+
 #ifdef _WIN32
   if (fileNameU) {
     gfree(fileNameU);
