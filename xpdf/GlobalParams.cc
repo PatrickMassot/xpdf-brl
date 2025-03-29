@@ -2717,6 +2717,25 @@ GString *GlobalParams::findCCFontFile(GString *collection) {
   return path;
 }
 
+GString *GlobalParams::getBrlHost() {
+  GString *s;
+
+  lockGlobalParams;
+  s = brlHost ? brlHost->copy() : (GString *)NULL;
+  unlockGlobalParams;
+  return s;
+}
+
+GString *GlobalParams::getBrlKey() {
+  GString *s;
+
+  lockGlobalParams;
+  s = brlKey ? brlKey->copy() : (GString *)NULL;
+  unlockGlobalParams;
+  return s;
+}
+
+
 int GlobalParams::getPSPaperWidth() {
   int w;
 
