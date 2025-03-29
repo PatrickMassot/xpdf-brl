@@ -2729,9 +2729,15 @@ GString *GlobalParams::getBrlHost() {
 GString *GlobalParams::getBrlKey() {
   GString *s;
 
-  lockGlobalParams;
-  s = brlKey ? brlKey->copy() : (GString *)NULL;
-  unlockGlobalParams;
+  // The code below leads to crashes Patrick doesn’t understand, so 
+  // let’s hard-code the key file
+  //
+  // lockGlobalParams;
+  // s = brlKey ? brlKey->copy() : (GString *)NULL;
+  // unlockGlobalParams;
+  // return s;
+
+  s = new GString("/etc/brlapi.key");
   return s;
 }
 
