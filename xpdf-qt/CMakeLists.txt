@@ -94,7 +94,7 @@ if ((QT4_FOUND OR Qt5Widgets_FOUND OR Qt6Widgets_FOUND)
     ${XPDF_ICONS}
     ${XPDF_MANIFEST}
   )
-  target_link_libraries(xpdf ${QT_LIBRARIES} ${EXTRA_QT_LIBRARIES}
+  target_link_libraries(xpdf brlapi ${QT_LIBRARIES} ${EXTRA_QT_LIBRARIES}
                         ${PAPER_LIBRARY}
                         ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
                         ${DTYPE_LIBRARY}

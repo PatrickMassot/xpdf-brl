@@ -118,7 +118,7 @@ if (HAVE_SPLASH)
     pdftops.cc
     ${MANIFEST}
   )
-  target_link_libraries(pdftops goo fofi splash
+  target_link_libraries(pdftops goo fofi splash brlapi
                         ${PAPER_LIBRARY}
                         ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
                         ${DTYPE_LIBRARY}
@@ -133,7 +133,7 @@ else ()
     pdftops.cc
     ${MANIFEST}
   )
-  target_link_libraries(pdftops goo fofi
+  target_link_libraries(pdftops goo fofi brlapi
                         ${PAPER_LIBRARY}
                         ${LCMS_LIBRARY}
                         ${FONTCONFIG_LIBRARY}
@@ -150,7 +150,7 @@ add_executable(pdftotext
   pdftotext.cc
   ${MANIFEST}
 )
-target_link_libraries(pdftotext goo fofi
+target_link_libraries(pdftotext goo fofi brlapi
                       ${PAPER_LIBRARY}
                       ${LCMS_LIBRARY}
                       ${FONTCONFIG_LIBRARY}
@@ -171,7 +171,7 @@ if (HAVE_SPLASH AND PNG_FOUND)
     pdftohtml.cc
     ${MANIFEST}
   )
-  target_link_libraries(pdftohtml goo fofi splash
+  target_link_libraries(pdftohtml goo fofi splash brlapi
                         ${PAPER_LIBRARY}
                         ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
                         ${DTYPE_LIBRARY}
@@ -190,7 +190,7 @@ add_executable(pdfinfo
   pdfinfo.cc
   ${MANIFEST}
 )
-target_link_libraries(pdfinfo goo fofi
+target_link_libraries(pdfinfo goo fofi brlapi
                       ${PAPER_LIBRARY}
                       ${LCMS_LIBRARY}
                       ${FONTCONFIG_LIBRARY}
@@ -205,7 +205,7 @@ add_executable(pdffonts
   pdffonts.cc
   ${MANIFEST}
 )
-target_link_libraries(pdffonts goo fofi
+target_link_libraries(pdffonts goo fofi brlapi
                       ${PAPER_LIBRARY}
                       ${LCMS_LIBRARY}
                       ${FONTCONFIG_LIBRARY}
@@ -220,7 +220,7 @@ add_executable(pdfdetach
   pdfdetach.cc
   ${MANIFEST}
 )
-target_link_libraries(pdfdetach goo fofi
+target_link_libraries(pdfdetach goo fofi brlapi
                       ${PAPER_LIBRARY}
                       ${LCMS_LIBRARY}
                       ${FONTCONFIG_LIBRARY}
@@ -238,7 +238,7 @@ if (HAVE_SPLASH)
     pdftoppm.cc
     ${MANIFEST}
   )
-  target_link_libraries(pdftoppm goo fofi splash
+  target_link_libraries(pdftoppm goo fofi splash brlapi
                         ${PAPER_LIBRARY}
                         ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
                         ${DTYPE_LIBRARY}
@@ -259,7 +259,7 @@ if (HAVE_SPLASH AND PNG_FOUND)
     pdftopng.cc
     ${MANIFEST}
   )
-  target_link_libraries(pdftopng goo fofi splash
+  target_link_libraries(pdftopng goo fofi splash brlapi
                         ${PAPER_LIBRARY}
                         ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
                         ${DTYPE_LIBRARY}
@@ -279,7 +279,7 @@ add_executable(pdfimages
   pdfimages.cc
   ${MANIFEST}
 )
-target_link_libraries(pdfimages goo fofi
+target_link_libraries(pdfimages goo fofi brlapi
                       ${PAPER_LIBRARY}
                       ${LCMS_LIBRARY}
                       ${FONTCONFIG_LIBRARY}
