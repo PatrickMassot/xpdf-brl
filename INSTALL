@@ -37,6 +37,8 @@ different systems.
     - libpng (for pdftopng and pdftohtml)
     - zlib (for pdftopng and pdftohtml)
 
+    Patrick: sudo apt install qt6-base-dev cmake
+
   If Qt isn't found, the GUI viewer (xpdf) won't be built, but the
   command line tools will still be built.
 
@@ -52,6 +54,8 @@ different systems.
 * Run cmake:
 
       cmake -DCMAKE_BUILD_TYPE=Release {other options - see below} ..
+
+      Patrick: The .. at the end of the previous lin is a crucial part
 
   If your build directory isn't under the source, use the full path to
   the source directory:
